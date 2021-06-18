@@ -47,6 +47,23 @@ export class HomePage extends Component {
   };
 
   componentDidMount() {
+    // Chiro: 根据to指定跳转到帮助文档
+    const search = window.location.hash.split("?");
+    if (search.length > 1) {
+      const query = search[search.length - 1].split("&");
+      for (const q of query) {
+        if (q.startsWith("to=")) {
+          try {
+            const to = decodeURIComponent(q.slice(3, q.length));
+            this.props.history.push(to);
+            console.log("Jumping to:", to);
+            // localhost:3000/#/home?to=%2Fdoc%2FdocHome
+          } catch (e) {
+            console.error("Unable to jump to location:", q);
+          }
+        }
+      }
+    }
     this.fetch_mirrors_list();
   }
 
