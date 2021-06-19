@@ -54,10 +54,11 @@ export class HomePage extends Component {
       for (const q of query) {
         if (q.startsWith("to=")) {
           try {
-            const to = decodeURIComponent(q.slice(3, q.length));
-            this.props.history.push(to);
+            // const to = decodeURIComponent(q.slice(3, q.length)) + '?to=' + q.slice(3, q.length);
+            const to = "/doc/docHome" + "?to=" + q.slice(3, q.length);
             console.log("Jumping to:", to);
-            // localhost:3000/#/home?to=%2Fdoc%2FdocHome
+            this.props.history.push(to);
+            // localhost:3000/#/home?to=%2Fdoc%2Fctan
           } catch (e) {
             console.error("Unable to jump to location:", q);
           }

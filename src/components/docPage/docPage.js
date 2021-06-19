@@ -93,6 +93,27 @@ export default class DocPage extends Component {
   }
 
   componentDidMount() {
+    // Chiro: 根据to指定跳转到帮助文档
+    const search = window.location.hash.split("?");
+    if (search.length > 1) {
+      const query = search[search.length - 1].split("&");
+      for (const q of query) {
+        if (q.startsWith("to=")) {
+          try {
+            const to = decodeURIComponent(q.slice(3, q.length));
+            console.log("Jumping to:", to);
+            // this.props.history.push(to);
+            this.importAndExecDoc(to);
+            this.props.history.push(to);
+            return;
+            // localhost:3000/#/home?to=%2Fdoc%2Falpine
+          } catch (e) {
+            console.error("Unable to jump to location:", q);
+          }
+        }
+      }
+    }
+
     this.importAndExecDoc("/doc/docHome");
   }
 
